@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>しごと効率化ラボ – Pinterest投稿補助ツール</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ivory:   #faf8f4;
+      --cream:   #f3f0ea;
+      --white:   #ffffff;
+      --teal:    oklch(56% 0.09 185);
+      --teal-lt: oklch(94% 0.04 185);
+      --teal-md: oklch(80% 0.07 185);
+      --coral:   oklch(68% 0.09 30);
+      --coral-lt:oklch(95% 0.04 30);
+      --ink:     oklch(25% 0.01 260);
+      --muted:   oklch(50% 0.01 260);
+      --border:  oklch(88% 0.02 260);
+      --shadow:  0 2px 12px oklch(70% 0.02 260 / 0.14);
+      --radius:  16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Hiragino Sans", "ヒラギノ角ゴ ProN", "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "Meiryo UI", sans-serif;
+      background: var(--ivory);
+      color: var(--ink);
+      line-height: 1.85;
+      font-size: 15px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 8px oklch(70% 0.02 260 / 0.08);
+    }
+    .header-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      gap: 16px;
+    }
+    .site-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+    .site-name span {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    nav a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1.5px solid transparent;
+      padding-bottom: 2px;
+      transition: color .2s, border-color .2s;
+    }
+    nav a:hover { color: var(--teal); border-color: var(--teal); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, var(--teal-lt) 0%, var(--ivory) 60%);
+      padding: 72px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--white);
+      border: 1px solid var(--teal-md);
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 11.5px;
+      color: var(--teal);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 20px;
+    }
+    .hero-badge::before {
+      content: "";
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      opacity: 0.7;
+    }
+    .hero h1 {
+      font-size: clamp(22px, 5vw, 34px);
+      font-weight: 800;
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+      margin-bottom: 18px;
+      color: var(--ink);
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--teal);
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.9;
+    }
+
+    /* Decorative CSS shapes */
+    .deco {
+      position: absolute;
+      pointer-events: none;
+    }
+    .deco-circle-lg {
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: var(--teal-lt);
+      opacity: 0.5;
+    }
+    .deco-circle-sm {
+      bottom: 20px; right: 140px;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--coral-lt);
+      opacity: 0.6;
+    }
+    .deco-rect {
+      top: 40px; right: 180px;
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: var(--teal-md);
+      opacity: 0.18;
+      transform: rotate(18deg);
+    }
+    .deco-dot-grid {
+      top: 24px; right: 48px;
+      width: 100px; height: 100px;
+      background-image: radial-gradient(circle, var(--teal) 1.5px, transparent 1.5px);
+      background-size: 14px 14px;
+      opacity: 0.12;
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+      display: grid;
+      gap: 32px;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 32px 36px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    @media (max-width: 600px) {
+      .card { padding: 24px 20px; }
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title::before {
+      content: "";
+      width: 4px; height: 18px;
+      border-radius: 2px;
+      background: var(--teal);
+      flex-shrink: 0;
+    }
+
+    .card p { color: var(--muted); line-height: 1.9; margin-bottom: 12px; }
+    .card p:last-child { margin-bottom: 0; }
+
+    /* ── LIST CARDS ── */
+    .list-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .list-item {
+      background: var(--ivory);
+      border-radius: 12px;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    .list-item .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* ── SERVICE TAG LIST ── */
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .tag {
+      background: var(--teal-lt);
+      border: 1px solid var(--teal-md);
+      color: var(--teal);
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── NOTICE CARD ── */
+    .notice-card {
+      background: var(--coral-lt);
+      border: 1px solid oklch(88% 0.06 30);
+      border-radius: var(--radius);
+      padding: 20px 28px;
+      font-size: 13.5px;
+      color: oklch(38% 0.07 30);
+      line-height: 1.85;
+    }
+    .notice-card strong { display: block; font-weight: 700; margin-bottom: 6px; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* ── NOTE LINK ── */
+    .note-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--teal);
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      border-bottom: 1.5px solid var(--teal-md);
+      padding-bottom: 1px;
+      transition: opacity .2s;
+    }
+    .note-link:hover { opacity: 0.7; }
+    .note-link::after { content: "↗"; font-size: 12px; }
+
+    /* ── ABOUT ILLUSTRATION CARD ── */
+    .illust-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 32px;
+    }
+    @media (max-width: 580px) {
+      .illust-card { grid-template-columns: 1fr; }
+      .illust-wrap { display: none; }
+    }
+    .illust-wrap {
+      width: 120px;
+      flex-shrink: 0;
+    }
+
+    /* CSS-drawn "notebook + check" illustration */
+    .illust {
+      width: 110px;
+      height: 120px;
+      position: relative;
+    }
+    /* notebook body */
+    .illust-nb {
+      position: absolute;
+      bottom: 0; left: 10px;
+      width: 80px; height: 90px;
+      background: var(--white);
+      border: 2px solid var(--teal-md);
+      border-radius: 4px 10px 10px 4px;
+    }
+    /* spine */
+    .illust-nb::before {
+      content: "";
+      position: absolute;
+      left: -8px; top: 0;
+      width: 8px; height: 100%;
+      background: var(--teal-md);
+      border-radius: 4px 0 0 4px;
+    }
+    /* lines */
+    .illust-nb::after {
+      content: "";
+      position: absolute;
+      top: 16px; left: 10px; right: 10px;
+      height: 2px;
+      background: var(--teal-lt);
+      box-shadow: 0 10px 0 var(--teal-lt), 0 20px 0 var(--teal-lt), 0 30px 0 var(--teal-lt), 0 40px 0 var(--teal-lt);
+    }
+    /* check circle */
+    .illust-chk {
+      position: absolute;
+      top: 0; right: 0;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 3px 10px oklch(56% 0.09 185 / 0.3);
+    }
+    .illust-chk::after {
+      content: "";
+      width: 12px; height: 8px;
+      border-left: 3px solid #fff;
+      border-bottom: 3px solid #fff;
+      transform: rotate(-45deg) translateY(-2px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--cream);
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-inner .site-name { color: var(--teal); font-size: 13px; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a {
+      font-size: 12.5px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--teal); }
+    .copyright { font-size: 11.5px; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="site-name">
+      しごと効率化ラボ
+      <span>Pinterest投稿補助ツール</span>
+    </div>
+    <nav>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="deco deco-circle-lg"></div>
+  <div class="deco deco-circle-sm"></div>
+  <div class="deco deco-rect"></div>
+  <div class="deco deco-dot-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Pinterest APIツール案内ページ</div>
+    <h1>現場の事務作業を、<br><em>AIで、もっとラクに。</em></h1>
+    <p class="hero-sub">保育士や介護士など、忙しい現場職のための書類作成・記録・事務作業時短を、AIで少しずつ叶えるための情報を発信しています。</p>
+  </div>
+</section>
+
+<main>
+
+  <!-- About -->
+  <div class="card">
+    <div class="illust-card">
+      <div>
+        <div class="card-title">このページについて</div>
+        <p>このサイトは、noteアカウント「しごと効率化ラボ」の記事紹介用Pinを、運営者本人のPinterestアカウントへ投稿するための<strong>API連携ツール</strong>に関する案内ページです。</p>
+        <p>しごと効率化ラボは、AIを活用して、保育士をはじめとする現場職の事務作業を少しでもラクにするための情報を発信しています。</p>
+        <p style="margin-top:12px;">
+          <a href="https://note.com/hoiku_jitan" target="_blank" rel="noopener" class="note-link">note：しごと効率化ラボ</a>
+        </p>
+      </div>
+      <div class="illust-wrap">
+        <div class="illust">
+          <div class="illust-nb"></div>
+          <div class="illust-chk"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Theme -->
+  <div class="card">
+    <div class="card-title">発信テーマ</div>
+    <p>現在は、保育士向けに <strong>連絡帳・保育記録・日誌・月案・週案</strong> などの書類作成をAIで時短する方法を中心に扱っています。</p>
+    <p>今後は、介護士など <strong>IT化が進みにくい業界</strong> の記録・報告・事務作業を簡単にするテーマにも広げていく予定です。</p>
+  </div>
+
+  <!-- Usage -->
+  <div class="card">
+    <div class="card-title">本ツールの主な用途</div>
+    <div class="list-grid">
+      <div class="list-item"><span class="dot"></span>運営者本人が作成したnote記事の紹介</div>
+      <div class="list-item"><span class="dot"></span>Pinterest向けPin画像の投稿</div>
+      <div class="list-item"><span class="dot"></span>Pinタイトル・説明文・リンクURLの管理</div>
+      <div class="list-item"><span class="dot"></span>投稿履歴の管理</div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <div class="card">
+    <div class="card-title">利用するサービス</div>
+    <div class="tag-list">
+      <span class="tag">Pinterest API</span>
+      <span class="tag">Google Apps Script</span>
+      <span class="tag">Googleスプレッドシート</span>
+      <span class="tag">Googleドライブ</span>
+    </div>
+  </div>
+
+  <!-- Notice -->
+  <div class="notice-card">
+    <strong>ご注意</strong>
+    本ツールは、第三者向けに提供するアプリではありません。運営者本人の情報発信作業を効率化するための内部利用ツールです。<br>
+    本サイトおよび本ツールは、Pinterestが公式に提供・運営するものではありません。
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="site-name">しごと効率化ラボ</div>
+    <div class="footer-links">
+      <a href="https://note.com/hoiku_jitan" target="_blank" rel="noopener">note</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </div>
+    <p class="copyright">© 2026 しごと効率化ラボ</p>
+  </div>
+</footer>
+
+</body>
+</html>

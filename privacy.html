@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プライバシーポリシー – しごと効率化ラボ</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ivory:   #faf8f4;
+      --cream:   #f3f0ea;
+      --white:   #ffffff;
+      --teal:    oklch(56% 0.09 185);
+      --teal-lt: oklch(94% 0.04 185);
+      --teal-md: oklch(80% 0.07 185);
+      --coral:   oklch(68% 0.09 30);
+      --coral-lt:oklch(95% 0.04 30);
+      --ink:     oklch(25% 0.01 260);
+      --muted:   oklch(50% 0.01 260);
+      --border:  oklch(88% 0.02 260);
+      --shadow:  0 2px 12px oklch(70% 0.02 260 / 0.14);
+      --radius:  16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Hiragino Sans", "ヒラギノ角ゴ ProN", "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "Meiryo UI", sans-serif;
+      background: var(--ivory);
+      color: var(--ink);
+      line-height: 1.85;
+      font-size: 15px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 8px oklch(70% 0.02 260 / 0.08);
+    }
+    .header-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      gap: 16px;
+    }
+    .site-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      display: block;
+      white-space: nowrap;
+    }
+    .site-name span {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    nav a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1.5px solid transparent;
+      padding-bottom: 2px;
+      transition: color .2s, border-color .2s;
+    }
+    nav a:hover { color: var(--teal); border-color: var(--teal); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: linear-gradient(160deg, var(--teal-lt) 0%, var(--ivory) 55%);
+      padding: 56px 24px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .page-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--white);
+      border: 1px solid var(--teal-md);
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 11.5px;
+      color: var(--teal);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .page-header h1 {
+      font-size: clamp(20px, 4vw, 28px);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+    .page-header .enacted {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+
+    /* Deco */
+    .deco { position: absolute; pointer-events: none; }
+    .deco-c1 { top: -40px; right: -40px; width: 220px; height: 220px; border-radius: 50%; background: var(--teal-lt); opacity: 0.5; }
+    .deco-c2 { bottom: 10px; right: 100px; width: 60px; height: 60px; border-radius: 50%; background: var(--coral-lt); opacity: 0.5; }
+    .deco-dots { top: 20px; right: 40px; width: 80px; height: 80px; background-image: radial-gradient(circle, var(--teal) 1.5px, transparent 1.5px); background-size: 12px 12px; opacity: 0.1; }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+      display: grid;
+      gap: 24px;
+    }
+
+    /* ── INTRO CARD ── */
+    .intro-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 14.5px;
+    }
+    @media (max-width: 600px) { .intro-card { padding: 20px 18px; } }
+
+    /* ── SECTION CARD ── */
+    .section-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    @media (max-width: 600px) { .section-card { padding: 20px 18px; } }
+
+    .section-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px; height: 26px;
+      border-radius: 8px;
+      background: var(--teal);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .section-heading h2 {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.01em;
+    }
+
+    .section-card p {
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 14.5px;
+      margin-bottom: 10px;
+    }
+    .section-card p:last-child { margin-bottom: 0; }
+
+    .section-card ul {
+      list-style: none;
+      display: grid;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .section-card ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .section-card ul li::before {
+      content: "";
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--teal-md);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    /* ── NOTE LINK ── */
+    .note-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--teal);
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      border-bottom: 1.5px solid var(--teal-md);
+      padding-bottom: 1px;
+      transition: opacity .2s;
+      word-break: break-all;
+    }
+    .note-link:hover { opacity: 0.7; }
+    .note-link::after { content: "↗"; font-size: 11px; }
+
+    /* ── HIGHLIGHT CARD ── */
+    .highlight-card {
+      background: var(--teal-lt);
+      border: 1px solid var(--teal-md);
+      border-radius: var(--radius);
+      padding: 22px 28px;
+      font-size: 14px;
+      color: oklch(35% 0.07 185);
+      line-height: 1.9;
+    }
+    .highlight-card strong { font-weight: 700; display: block; margin-bottom: 4px; font-size: 12.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--teal); }
+
+    /* ── NOTICE CARD ── */
+    .notice-card {
+      background: var(--coral-lt);
+      border: 1px solid oklch(88% 0.06 30);
+      border-radius: var(--radius);
+      padding: 20px 28px;
+      font-size: 13.5px;
+      color: oklch(38% 0.07 30);
+      line-height: 1.85;
+    }
+    .notice-card strong { display: block; font-weight: 700; margin-bottom: 6px; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--cream);
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-inner .logo { font-size: 13px; font-weight: 700; color: var(--teal); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12.5px; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--teal); }
+    .copyright { font-size: 11.5px; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="site-name">
+      しごと効率化ラボ
+      <span>Pinterest投稿補助ツール</span>
+    </a>
+    <nav>
+      <a href="index.html">← トップへ戻る</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-header">
+  <div class="deco deco-c1"></div>
+  <div class="deco deco-c2"></div>
+  <div class="deco deco-dots"></div>
+  <div class="page-header-inner">
+    <div class="page-header-badge">Legal</div>
+    <h1>プライバシーポリシー</h1>
+    <p class="enacted">制定日：2026年4月26日</p>
+  </div>
+</section>
+
+<main>
+
+  <div class="intro-card">
+    しごと効率化ラボ（以下、「当方」といいます）は、Pinterest APIを利用したPinterest投稿補助ツール（以下、「本ツール」といいます）の運用にあたり、以下の通りプライバシーポリシーを定めます。
+  </div>
+
+  <!-- 1 -->
+  <div class="section-card">
+    <div class="section-heading">
+      <span class="section-num">1</span>
+      <h2>本ツールの目的</h2>
+    </div>
+    <p>本ツールは、当方が運営するnoteアカウント「しごと効率化ラボ」の記事を紹介するPinを、運営者本人のPinterestアカウントへ投稿するために使用します。</p>
+    <p>運営note：<a href="https://note.com/hoiku_jitan" target="_blank" rel="noopener" class="note-link">https://note.com/hoiku_jitan</a></p>
+  </div>
+
+  <!-- 2 -->
+  <div class="section-card">
+    <div class="section-heading">
+      <span class="section-num">2</span>
+      <h2>取得・利用する情報</h2>
+    </div>
+    <p>本ツールは、Pinterest APIを通じて、以下の情報を取得または利用する場合があります。</p>
+    <ul>
+      <li>Pinterestアカウントに関する基本情報</li>
+      <li>Pinterestボード情報</li>
+      <li>投稿するPinの画像</li>
+      <li>Pinのタイトル</li>
+      <li>Pinの説明文</li>
+      <li>Pinに設定するリンクURL</li>
+      <li>投稿結果に関する情報</li>
+    </ul>
+  </div>
+
+  <!-- 3 -->
+  <div class="section-card">
+    <div class="section-heading">
+      <span class="section-num">3</span>
+      <h2>利用目的</h2>
+    </div>
+    <p>取得または利用した情報は、以下の目的にのみ使用します。</p>
+    <ul>
+      <li>運営者本人のPinterestアカウントへのPin投稿</li>
+      <li>投稿先ボードの指定</li>
+      <li>投稿内容の管理</li>
+      <li>投稿履歴の確認</li>
+      <li>note記事への導線作成</li>
+    </ul>
+  </div>
+
+  <!-- 4 -->
+  <div class="section-card">
+    <div class="section-heading">
+      <span class="section-num">4</span>
+      <h2>第三者提供について</h2>
+    </div>
+    <p>当方は、取得した情報を第三者に販売、共有、再配布しません。ただし、法令に基づく場合を除きます。</p>
+  </div>
+
+  <!-- 5 -->
+  <div class="section-card">
+    <div class="section-heading">
+      <span class="section-num">5</span>
+      <h2>データの管理</h2>
+    </div>
+    <p>取得した情報は、目的達成に必要な範囲で適切に管理します。不要となった情報は、合理的な範囲で削除または利用停止します。</p>
+  </div>
+
+  <!-- 6 -->
+  <div class="section-card">
+    <div class="section-heading">
+      <span class="section-num">6</span>
+      <h2>アクセス権限の解除</h2>
+    </div>
+    <p>Pinterestアカウントとの連携を解除した場合、本ツールはPinterest APIを通じた新たな情報取得や投稿を行いません。</p>
+  </div>
+
+  <!-- 7 -->
+  <div class="highlight-card">
+    <strong>本ツールの利用範囲（第7条）</strong>
+    本ツールは、当方の内部利用を目的とした投稿補助ツールです。第三者ユーザーに提供するサービスではありません。
+  </div>
+
+  <!-- 8 -->
+  <div class="notice-card">
+    <strong>Pinterestとの関係（第8条）</strong>
+    本サイトおよび本ツールは、Pinterestが公式に提供・運営するものではありません。Pinterest APIを利用して、運営者本人のPinterestアカウントへの投稿を補助する目的で運用しています。
+  </div>
+
+  <!-- 9 -->
+  <div class="section-card">
+    <div class="section-heading">
+      <span class="section-num">9</span>
+      <h2>お問い合わせ</h2>
+    </div>
+    <p>本プライバシーポリシーに関するお問い合わせは、以下のnoteアカウントまでお願いします。</p>
+    <p>しごと効率化ラボ：<a href="https://note.com/hoiku_jitan" target="_blank" rel="noopener" class="note-link">https://note.com/hoiku_jitan</a></p>
+  </div>
+
+  <!-- 10 -->
+  <div class="section-card">
+    <div class="section-heading">
+      <span class="section-num">10</span>
+      <h2>改定</h2>
+    </div>
+    <p>本プライバシーポリシーは、必要に応じて変更することがあります。</p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="logo">しごと効率化ラボ</div>
+    <div class="footer-links">
+      <a href="index.html">← トップへ戻る</a>
+      <a href="https://note.com/hoiku_jitan" target="_blank" rel="noopener">note</a>
+    </div>
+    <p class="copyright">© 2026 しごと効率化ラボ</p>
+  </div>
+</footer>
+
+</body>
+</html>
