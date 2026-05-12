@@ -264,6 +264,98 @@
     }
     .notice-card strong { display: block; font-weight: 700; margin-bottom: 6px; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; }
 
+    /* ── FLOW STEPS ── */
+    .flow {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+      counter-reset: step;
+    }
+    .flow-step {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 18px;
+      background: var(--ivory);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .flow-step .step-num {
+      counter-increment: step;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .flow-step .step-num::before { content: counter(step); }
+    .flow-step .step-body {
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.7;
+      padding-top: 4px;
+    }
+
+    /* ── INLINE NEGATIVE LIST ── */
+    .neg-list {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .neg-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; color: var(--muted); line-height: 1.7;
+      padding: 10px 14px;
+      background: var(--ivory);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .neg-list li::before {
+      content: "×";
+      color: var(--coral);
+      font-weight: 800;
+      flex-shrink: 0;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    /* ── CTA LINK BUTTON ── */
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--teal);
+      color: #fff;
+      padding: 12px 22px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 3px 12px oklch(56% 0.09 185 / 0.3);
+    }
+    .cta-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 16px oklch(56% 0.09 185 / 0.35); }
+    .cta-btn::after { content: "→"; font-size: 14px; }
+
+    /* ── EMPHASIS BLOCK ── */
+    .emph {
+      background: linear-gradient(0deg, var(--teal-lt), var(--teal-lt));
+      border-left: 3px solid var(--teal);
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: oklch(35% 0.07 185);
+      line-height: 1.85;
+      margin-top: 12px;
+    }
+
     /* ── NOTE LINK ── */
     .note-link {
       display: inline-flex;
@@ -394,23 +486,24 @@
   <div class="deco deco-rect"></div>
   <div class="deco deco-dot-grid"></div>
   <div class="hero-inner">
-    <div class="hero-badge">Pinterest APIツール案内ページ</div>
+    <div class="hero-badge">Pinterest投稿補助ツール 公開情報ページ</div>
     <h1>現場の事務作業を、<br><em>AIで、もっとラクに。</em></h1>
-    <p class="hero-sub">保育士や介護士など、忙しい現場職のための書類作成・記録・事務作業時短を、AIで少しずつ叶えるための情報を発信しています。</p>
+    <p class="hero-sub">しごと効率化ラボが運営するnote記事をPinterestで紹介するために、運営者本人のPinterestアカウントへPinを投稿する内部利用ツールの案内ページです。</p>
   </div>
 </section>
 
 <main>
 
-  <!-- About -->
+  <!-- このサイトについて -->
   <div class="card">
     <div class="illust-card">
       <div>
-        <div class="card-title">このページについて</div>
-        <p>このサイトは、noteアカウント「しごと効率化ラボ」の記事紹介用Pinを、運営者本人のPinterestアカウントへ投稿するための<strong>API連携ツール</strong>に関する案内ページです。</p>
-        <p>しごと効率化ラボは、AIを活用して、保育士をはじめとする現場職の事務作業を少しでもラクにするための情報を発信しています。</p>
-        <p style="margin-top:12px;">
-          <a href="https://note.com/hoiku_jitan" target="_blank" rel="noopener" class="note-link">note：しごと効率化ラボ</a>
+        <div class="card-title">このサイトについて</div>
+        <p>このサイトは、しごと効率化ラボが運用する<strong>Pinterest投稿補助ツール</strong>の公開情報ページです。</p>
+        <p>本ツールは、しごと効率化ラボが運営するnote記事をPinterestで紹介するために、運営者本人のPinterestアカウントへPinを投稿する<strong>内部利用ツール</strong>です。</p>
+        <p>実際の処理は<strong>Google Apps Script</strong>上で実行されます。このGitHub Pagesサイトは、Pinterest API申請のために、ツールの目的・仕組み・データの扱いを説明するためのページです。</p>
+        <p style="margin-top:14px;">
+          <a href="https://note.com/hoiku_jitan" target="_blank" rel="noopener" class="note-link">運営note：しごと効率化ラボ</a>
         </p>
       </div>
       <div class="illust-wrap">
@@ -422,25 +515,62 @@
     </div>
   </div>
 
-  <!-- Theme -->
+  <!-- しごと効率化ラボについて -->
   <div class="card">
-    <div class="card-title">発信テーマ</div>
-    <p>現在は、保育士向けに <strong>連絡帳・保育記録・日誌・月案・週案</strong> などの書類作成をAIで時短する方法を中心に扱っています。</p>
-    <p>今後は、介護士など <strong>IT化が進みにくい業界</strong> の記録・報告・事務作業を簡単にするテーマにも広げていく予定です。</p>
+    <div class="card-title">しごと効率化ラボについて</div>
+    <p>しごと効率化ラボは、AIを活用して、保育士・介護士などの現場職が抱える<strong>記録・連絡・報告・書類作成</strong>などの事務作業を少しでもラクにするための情報を発信しています。</p>
+    <p>現在は、保育士向けの<strong>連絡帳・保育記録・日誌・月案・週案</strong>などの書類作成時短を中心に扱っています。</p>
+    <p>今後は、介護士など、IT化が進みにくい現場職の記録・報告・事務作業をAIで簡単にするテーマにも広げていく予定です。</p>
   </div>
 
-  <!-- Usage -->
+  <!-- 本ツールでできること -->
   <div class="card">
-    <div class="card-title">本ツールの主な用途</div>
-    <div class="list-grid">
-      <div class="list-item"><span class="dot"></span>運営者本人が作成したnote記事の紹介</div>
-      <div class="list-item"><span class="dot"></span>Pinterest向けPin画像の投稿</div>
+    <div class="card-title">本ツールでできること</div>
+    <p>本ツールは、note記事をPinterestで紹介するためのPin投稿作業を補助します。</p>
+    <p>手作業でPinterest管理画面から投稿する代わりに、事前に管理している記事情報・Pin画像・タイトル・説明文・リンクURLをもとに、<strong>Google Apps ScriptからPinterest APIを呼び出してPinを作成</strong>します。</p>
+    <div class="list-grid" style="margin-top:16px;">
+      <div class="list-item"><span class="dot"></span>note記事ごとの投稿対象管理</div>
+      <div class="list-item"><span class="dot"></span>Pinterest向けPin画像の管理</div>
       <div class="list-item"><span class="dot"></span>Pinタイトル・説明文・リンクURLの管理</div>
+      <div class="list-item"><span class="dot"></span>投稿先Pinterestボードの指定</div>
+      <div class="list-item"><span class="dot"></span>Pinterest APIによるPin作成</div>
+      <div class="list-item"><span class="dot"></span>投稿結果の確認</div>
       <div class="list-item"><span class="dot"></span>投稿履歴の管理</div>
     </div>
   </div>
 
-  <!-- Services -->
+  <!-- Pinterest APIの利用内容 -->
+  <div class="card">
+    <div class="card-title">Pinterest APIの利用内容</div>
+    <p>本ツールは、Pinterest APIを利用して、<strong>運営者本人のPinterestアカウント</strong>に対してPinを作成します。APIの利用範囲は、Pin投稿と投稿管理に必要な範囲に限定されます。</p>
+    <p style="margin-top:10px;">OAuth認証で取得した権限は、運営者本人のPinterestアカウントに対するPin投稿および投稿管理のためにのみ使用します。</p>
+    <p style="margin-top:10px;">具体的には、以下の処理を行います。</p>
+    <div class="list-grid" style="margin-top:12px;">
+      <div class="list-item"><span class="dot"></span>OAuth認証によるPinterestアカウント連携</div>
+      <div class="list-item"><span class="dot"></span>投稿先ボード情報の確認</div>
+      <div class="list-item"><span class="dot"></span>Pin画像の投稿</div>
+      <div class="list-item"><span class="dot"></span>Pinタイトルの設定</div>
+      <div class="list-item"><span class="dot"></span>Pin説明文の設定</div>
+      <div class="list-item"><span class="dot"></span>PinリンクURLの設定</div>
+      <div class="list-item"><span class="dot"></span>投稿結果の確認</div>
+    </div>
+    <div class="emph">本ツールは、第三者のPinterestアカウントにはアクセスしません。第三者のPinを取得・編集・削除する目的では使用しません。</div>
+  </div>
+
+  <!-- 投稿フロー -->
+  <div class="card">
+    <div class="card-title">投稿フロー</div>
+    <div class="flow">
+      <div class="flow-step"><span class="step-num"></span><span class="step-body">note記事の情報をGoogleスプレッドシートで管理します。</span></div>
+      <div class="flow-step"><span class="step-num"></span><span class="step-body">記事内容に合わせてPinterest向けPin画像を作成します。</span></div>
+      <div class="flow-step"><span class="step-num"></span><span class="step-body">Google Apps ScriptからPinterest APIを呼び出します。</span></div>
+      <div class="flow-step"><span class="step-num"></span><span class="step-body">運営者本人のPinterestアカウントにPinを投稿します。</span></div>
+      <div class="flow-step"><span class="step-num"></span><span class="step-body">Pinのリンク先としてnote記事URLを設定します。</span></div>
+      <div class="flow-step"><span class="step-num"></span><span class="step-body">投稿結果を記録し、投稿履歴として管理します。</span></div>
+    </div>
+  </div>
+
+  <!-- 利用するサービス -->
   <div class="card">
     <div class="card-title">利用するサービス</div>
     <div class="tag-list">
@@ -448,14 +578,44 @@
       <span class="tag">Google Apps Script</span>
       <span class="tag">Googleスプレッドシート</span>
       <span class="tag">Googleドライブ</span>
+      <span class="tag">GitHub Pages</span>
+      <span class="tag">note</span>
     </div>
   </div>
 
-  <!-- Notice -->
+  <!-- 対象ユーザー -->
+  <div class="card">
+    <div class="card-title">対象ユーザー</div>
+    <p>本ツールの利用者は、<strong>しごと効率化ラボの運営者本人のみ</strong>です。</p>
+    <p>一般ユーザー向けにアカウント登録、ログイン機能、投稿代行、分析サービス、外部ユーザー向けダッシュボードなどを提供するものではありません。第三者ユーザーが本ツールを操作することはありません。</p>
+  </div>
+
+  <!-- データの扱い -->
+  <div class="card">
+    <div class="card-title">データの扱い</div>
+    <p>本ツールで扱うPinterest関連データは、運営者本人のPinterestアカウント、投稿先ボード、Pin投稿に必要な情報に限定されます。</p>
+    <p style="margin-top:10px;">本ツールは以下を行いません。</p>
+    <ul class="neg-list">
+      <li>PinterestのログインIDやパスワードの取得</li>
+      <li>第三者ユーザーのPinterestデータ取得</li>
+      <li>取得データの販売</li>
+      <li>取得データの第三者共有</li>
+      <li>取得データの再配布</li>
+      <li>投稿管理以外の目的でのPinterestデータ利用</li>
+    </ul>
+  </div>
+
+  <!-- Pinterestとの関係 -->
   <div class="notice-card">
-    <strong>ご注意</strong>
-    本ツールは、第三者向けに提供するアプリではありません。運営者本人の情報発信作業を効率化するための内部利用ツールです。<br>
-    本サイトおよび本ツールは、Pinterestが公式に提供・運営するものではありません。
+    <strong>Pinterestとの関係</strong>
+    本サイトおよび本ツールは、Pinterestが公式に提供・運営するものではありません。Pinterest APIを利用して、運営者本人のPinterestアカウントへのPin投稿を補助する目的で運用しています。
+  </div>
+
+  <!-- プライバシーポリシー CTA -->
+  <div class="card" style="text-align:center;">
+    <div class="card-title" style="justify-content:center;">プライバシーポリシー</div>
+    <p style="margin-bottom:18px;">データの取り扱いについては、以下のページをご確認ください。</p>
+    <a href="privacy.html" class="cta-btn">プライバシーポリシーを見る</a>
   </div>
 
 </main>
